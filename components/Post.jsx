@@ -1,18 +1,29 @@
 import moment from "moment";
 import Link from "next/link";
 
-const Post = ({ post }) => {
+const Post = ({ id, url, time, title, text, author }) => {
   return (
-    <Link href={`/posts/${post.id}`}>
-    <div className="flex flex-col gap-4 w-[300px] border-b-2 pb-4 justify-between bg-gray-100 p-2 rounded h-full hover:scale-110 duration-500 shadow-xl">
-      <div className="flex justify-between">
-        <span className="text-xs text-gray-500">{moment(new Date(post.time.seconds*1000)).format('HH:mm')}</span>
-        <span className="text-xs text-gray-500">{moment(new Date(post.time.seconds*1000)).format('DD.MM.YYYY')}</span>
+    <Link href={`/posts/${id}`}>
+      <div className="flex flex-col gap-4 w-[300px] h-[500px] pb-4 justify-between bg-gradient-to-r from-zinc-600 to-zinc-700 p-2 rounded hover:scale-110 duration-500 shadow-xl overflow-hidden">
+        <img className="h-[60%] object-cover" src={url} alt="image" />
+        <div className="flex justify-between">
+          <span className="text-[10px] tracking-wider text-teal-300">
+            {moment(new Date(time.seconds * 1000)).format("HH:mm")}
+          </span>
+          <span className="text-[10px] tracking-wider text-teal-300">
+            {moment(new Date(time.seconds * 1000)).format("DD.MM.YYYY")}
+          </span>
+        </div>
+        <p className="font-semibold px-[10px] tracking-wider capitalize text-center">
+          {title}
+        </p>
+        <p className="text-center px-[10px] text-[12px] tracking-wider overflow-hidden">
+          {text.slice(0, 50)}...
+        </p>
+        <p className="text-center text-[10px] text-teal-300 tracking-wider">
+          {author}
+        </p>
       </div>
-      <p className="text-xl text-gray-800 tracking-wide capitalize text-center">{post.title}</p>
-      <p className="text-center">{post.text.slice(0, 50)}...</p>
-      <p className="text-center text-green-500 text-sm">{post.author}</p>
-    </div>
     </Link>
   );
 };

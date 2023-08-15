@@ -10,6 +10,7 @@ const GlobalContext = createContext();
 const AppContext = ({ children }) => {
   const [user, setUser] = useState("");
   const [posts, setPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -28,12 +29,18 @@ const AppContext = ({ children }) => {
       const sortedPosts = postsArr.sort(
         (a, b) => b.time.seconds - a.time.seconds
       );
+      if (user) {
+        const filteredPosts = sortedPosts.filter(
+          (item) => item.author === user.email
+        );
+        setUserPosts(filteredPosts);
+      }
       setPosts(sortedPosts);
     });
     return () => unsubscribe();
   }, [user]);
   return (
-    <GlobalContext.Provider value={{ user, posts, setPosts }}>
+    <GlobalContext.Provider value={{ user, posts, setPosts, userPosts }}>
       {children}
     </GlobalContext.Provider>
   );

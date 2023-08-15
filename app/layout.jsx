@@ -9,11 +9,11 @@ export const metadata = {
 
 const RootLayout = ({ children }) => (
   <html lang="en">
-    <body>
+    <body className="bg-gradient-to-b from-rose-100 to-rose-200 text-white">
       <AppContext>
         <div className="min-h-screen flex flex-col">
-        <Navbar />
-        {children}
+          <Navbar />
+          {children}
         </div>
       </AppContext>
     </body>

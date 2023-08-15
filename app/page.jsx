@@ -1,15 +1,26 @@
-import Link from "next/link";
+"use client";
 
-export default function Home() {
+import { useGlobalContext } from "./context";
+import Post from "@/components/Post";
+
+const PostsPage = () => {
+  const { posts } = useGlobalContext();
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-10 my-auto">
-      <p className="text-2xl font-semibold tracking-wide text-center w-[400px] md:w-[700px]">
-        Explore awesome stories written by another people and also add your to
-        our blog website to share your article with our fantastic community
-      </p>
-      <Link href={'/posts'} className="text-center py-4 text-2xl font-semibold bg-green-200 w-40 rounded-full hover:bg-green-400">
-        Check
-      </Link>
+    <div className="flex flex-wrap gap-8 my-[40px] justify-center">
+      {posts.map((post) => {
+        return (
+          <Post
+            key={post.id}
+            url={post.url}
+            id={post.id}
+            time={post.time}
+            title={post.title}
+            text={post.text}
+            author={post.author}
+          />
+        );
+      })}
     </div>
   );
-}
+};
+export default PostsPage;
